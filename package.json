@@ -23,13 +23,16 @@
   "homepage": "https://github.com/LambdaSchool/Sprint-Challenge-Node-Express#readme",
   "dependencies": {
     "express": "^4.17.0",
-    "helmet": "^3.16.0",
+    "helmet": "^3.18.0",
     "knex": "^0.16.5",
+    "lodash": "4.17.5",
     "sqlite3": "^4.0.6"
   },
   "devDependencies": {
     "eslint": "^5.16.0",
+    "eslint-plugin-react": "^7.13.0",
     "knex-cleaner": "^1.1.4",
+    "morgan": "^1.9.1",
     "nodemon": "^1.19.0"
   }
 }
