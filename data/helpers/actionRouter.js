@@ -1,5 +1,9 @@
 const express = require("express");
-const { validateActionId, requiredBody } = require("../middleware");
+const {
+  validateProject,
+  validateActionId,
+  requiredBody
+} = require("../middleware");
 const idBodyCheck = [validateActionId, requiredBody];
 const Action = require("./actionModel.js");
 const actionRouter = express.Router();
@@ -24,7 +28,7 @@ actionRouter.get("/:id", validateActionId, async (req, res) => {
   res.status(200).json(req.action);
 });
 
-actionRouter.post("/", requiredBody, async (req, res) => {
+actionRouter.post("/", validateProject, requiredBody, async (req, res) => {
   try {
     const action = await Action.insert(req.body);
     res.status(201).json(action);

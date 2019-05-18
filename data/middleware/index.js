@@ -1,7 +1,7 @@
 const Project = require("../helpers/projectModel.js");
 const Action = require("../helpers/actionModel.js");
 
-async function validateId(req, res, next) {
+async function validateProjectId(req, res, next) {
   try {
     const { id } = req.params;
     const project = await Project.get(id);
@@ -29,6 +29,24 @@ async function validateActionId(req, res, next) {
     res.status(500).json({ message: "Failed to process request" });
   }
 }
+async function validateProject(req, res, next) {
+  const { project_id, description, notes } = req.body;
+
+  if (!project_id || !description || !notes)
+    return res.status(400).json({
+      message: "An action requires a project_id, description, and notes."
+    });
+
+  const project = await Project.get(project_id);
+
+  if (!project || Object.keys(project).length < 1)
+    return res.status(400).json({ message: "Project not found; invalid id" });
+
+  req.action = req.body;
+
+  next();
+}
+
 function requiredBody(req, res, next) {
   if (req.body && Object.keys(req.body).length) {
     // go on to the next bit of middleware
@@ -39,4 +57,9 @@ function requiredBody(req, res, next) {
     res.status(400).json({ message: "Please include request body" });
   }
 }
-module.exports = { validateId, validateActionId, requiredBody };
+module.exports = {
+  validateProject,
+  validateProjectId,
+  validateActionId,
+  requiredBody
+};

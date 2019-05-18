@@ -1,8 +1,8 @@
 const express = require("express");
 
 const Project = require("./projectModel.js");
-const { validateId, requiredBody } = require("../middleware");
-const idBodyCheck = [validateId, requiredBody];
+const { validateProjectId, requiredBody } = require("../middleware");
+const idBodyCheck = [validateProjectId, requiredBody];
 const projectRouter = express.Router();
 
 projectRouter.use((req, res, next) => {
@@ -22,7 +22,7 @@ projectRouter.get("/", async (req, res) => {
     });
   }
 });
-projectRouter.get("/:id", validateId, async (req, res) => {
+projectRouter.get("/:id", validateProjectId, async (req, res) => {
   res.status(200).json(req.project);
 });
 
@@ -39,7 +39,7 @@ projectRouter.post("/", requiredBody, async (req, res) => {
   }
 });
 
-projectRouter.delete("/:id", validateId, async (req, res) => {
+projectRouter.delete("/:id", validateProjectId, async (req, res) => {
   try {
     const count = await Project.remove(req.params.id);
     if (count > 0) {
