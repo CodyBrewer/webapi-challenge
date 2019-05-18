@@ -1,7 +1,7 @@
 const Project = require("../helpers/projectModel.js");
 const Action = require("../helpers/actionModel.js");
 
-async function validateProjectId(req, res, next) {
+const validateProjectId = async (req, res, next) => {
   try {
     const { id } = req.params;
     const project = await Project.get(id);
@@ -14,8 +14,8 @@ async function validateProjectId(req, res, next) {
   } catch (error) {
     res.status(500).json({ message: "Failed to process request" });
   }
-}
-async function validateActionId(req, res, next) {
+};
+const validateActionId = async (req, res, next) => {
   try {
     const { id } = req.params;
     const action = await Action.get(id);
@@ -28,8 +28,8 @@ async function validateActionId(req, res, next) {
   } catch (error) {
     res.status(500).json({ message: "Failed to process request" });
   }
-}
-async function validateProject(req, res, next) {
+};
+const validateProject = async (req, res, next) => {
   const { project_id, description, notes } = req.body;
 
   if (!project_id || !description || !notes)
@@ -45,9 +45,9 @@ async function validateProject(req, res, next) {
   req.action = req.body;
 
   next();
-}
+};
 
-function requiredBody(req, res, next) {
+const requiredBody = (req, res, next) => {
   if (req.body && Object.keys(req.body).length) {
     // go on to the next bit of middleware
     next();
@@ -56,7 +56,7 @@ function requiredBody(req, res, next) {
     next({ message: "Please include request body" });
     res.status(400).json({ message: "Please include request body" });
   }
-}
+};
 module.exports = {
   validateProject,
   validateProjectId,
