@@ -2,7 +2,7 @@ const express = require("express");
 const helmet = require("helmet");
 const logger = require("morgan");
 
-const helpersRouter = require("./data/helpers/router");
+const projectRouter = require("./data/helpers/projectRouter.js");
 
 const server = express();
 
@@ -10,7 +10,7 @@ server.use(express.json());
 server.use(helmet());
 server.use(logger("dev"));
 
-server.use("/api/helpers", helpersRouter);
+server.use("/api/helpers", projectRouter);
 
 server.get("/api", (req, res) => {
   res.send(`
